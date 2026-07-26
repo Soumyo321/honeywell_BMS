@@ -1,146 +1,329 @@
-live link https://soumyo321-honeywell-bms-app1-snuezx.streamlit.app/
+# 🏢 Eco-Loop Building Agents
+### AI-Powered Autonomous Building Management System (BMS)
 
-→ Open Live Dashboard
+> **Honeywell Campus Connect 2026**
+>
+> **Problem Statement:** Eco-Loop Building Agents  
+> **Theme:** Smart Cities & Urban Development  
+> **Category:** Software
 
-📋 Problem Statement
+---
 
-ID: 1 | Title: Eco-Loop Building Agents
-Theme: Smart Cities & Urban Development | Category: Software
-Student: Soumyodip Bhattacharya | ID: 20525115
+## 🌐 Live Demo
 
-Buildings consume 40% of global energy — mostly through HVAC systems running on fixed, dumb schedules with no real-time adaptation. Traditional Building Management Systems (BMS) either waste energy or sacrifice occupant comfort with no intelligent tradeoff.
+**Dashboard:** https://soumyo321-honeywell-bms-app1-snuezx.streamlit.app/
 
-🚀 What We Built
+---
 
-A fully autonomous BMS that:
+## 📋 Problem Statement
 
-Runs real EnergyPlus 23.2 building physics simulation
-Reads live sensor data via Python API callbacks at every timestep
-Sends data to Llama 3.3-70B (open-source LLM) via Groq API
-LLM reasons about comfort vs energy vs carbon goals and calls MCP tools
-New HVAC setpoints are written directly into EnergyPlus actuators in real-time
-Every decision is logged to SQLite with full AI reasoning
-Streamlit dashboard shows live metrics, charts, AI chat, and 3-scenario comparison
-🏗 Architecture
-┌─────────────────────────────────────────────────────────────┐
-│                  Closed-Loop AI Control                      │
-│                                                              │
-│  EnergyPlus  ──sensor data──▶  MCP Bridge  ──tool call──▶  LLM  │
-│      ▲                             │                         │
-│      └────── actuator write ───────┘                         │
-│                                                              │
-│              SQLite ◀── log ──── Dashboard                   │
-└─────────────────────────────────────────────────────────────┘
-Layer	Component	Role
-Physics	EnergyPlus 23.2	Real building simulation with building_model.idf + Chicago weather
-Bridge	MCP Tool Bridge	get_sensor_data(), set_hvac_setpoints(), log_decision()
-AI	Llama 3.3-70B via Groq	Autonomous HVAC decisions every 4 simulation hours
-Storage	SQLite	Full audit trail — sensor readings, decisions, reasoning
-UI	Streamlit + Plotly	Live dashboard, charts, comfort gauge, AI chatbot
-✨ Key Features
-🔄 Closed-Loop Autonomous Control
-LLM receives real-time temperature from EnergyPlus
-Decides heating/cooling setpoints based on comfort + energy rules
-Writes setpoints directly to HVAC actuators — zero human intervention
-📊 Live Dashboard
-Temperature chart — zone temp vs comfort zone (21–24°C)
-Energy comparison — AI usage vs 8 kWh baseline
-Comfort gauge — ASHRAE 55 standard score
-Energy donut — AI optimized vs baseline overhead
-Carbon tracking — CO₂ avoided (CEA grid factor: 0.233 kg/kWh)
-🎭 Multi-Scenario Comparison
-Scenario	Outdoor Temp	Baseline	With AI	Saving
-🌤 Normal Day	22°C	8.0 kWh	2.57 kWh	67.8%
-☀️ Heatwave	42°C	18.0 kWh	4.2 kWh	76.7%
-❄️ Winter Cold	-5°C	15.0 kWh	3.8 kWh	74.7%
+**Student:** Soumyodip Bhattacharya  
+**Student ID:** 20525115
 
-Average AI savings: 73.1% across all scenarios
+Buildings account for nearly **40% of global energy consumption**, with HVAC systems being one of the largest contributors. Traditional Building Management Systems (BMS) operate using fixed schedules and static rules, resulting in:
 
-💬 AI Chat Assistant
+- Excessive energy consumption
+- Poor occupant comfort
+- No real-time adaptation
+- Lack of intelligent decision-making
 
-Ask the building AI anything about the simulation in real-time:
+### Our Solution
 
-"How much energy did we save?"
-"Why did the AI lower the heating setpoint?"
-"Is the building in the comfort zone?"
-🧰 Tech Stack
-├── Building Physics    → EnergyPlus 23.2 (pyenergyplus API)
-├── LLM                 → Llama 3.3-70B via Groq API
-├── AI Pattern          → MCP Tool Calling
-├── Energy Standard     → ASHRAE 55 Comfort + ASHRAE 90.1
-├── Carbon Factor       → CEA India Grid (0.233 kg CO₂/kWh)
-├── Database            → SQLite (real-time audit trail)
-├── Dashboard           → Streamlit + Plotly
-└── Language            → Python 3.10+
-📁 Project Structure
+**Eco-Loop Building Agents** is a fully autonomous AI-powered Building Management System that combines:
+
+- 🏢 Real EnergyPlus building physics simulation
+- 🤖 Llama 3.3-70B reasoning via Groq API
+- 🔧 MCP Tool Calling architecture
+- 📊 Live monitoring dashboard
+- 🌍 Carbon-aware optimization
+
+The system continuously balances **comfort, energy efficiency, and sustainability** without human intervention.
+
+---
+
+# 🚀 Features
+
+## 🔄 Autonomous Closed-Loop HVAC Control
+
+The AI continuously controls the building by:
+
+- Reading live sensor data from EnergyPlus
+- Reasoning using Llama 3.3-70B
+- Calling MCP tools
+- Updating HVAC setpoints automatically
+- Logging every decision with complete reasoning
+
+No manual intervention is required.
+
+---
+
+## 🏢 Real Building Physics
+
+Unlike mock simulations, this project uses:
+
+- EnergyPlus 23.2
+- Real IDF building model
+- Real weather file
+- Python callback API
+- Dynamic HVAC actuators
+
+This enables realistic building behavior.
+
+---
+
+## 📊 Live Dashboard
+
+The Streamlit dashboard provides:
+
+- 📈 Real-time temperature graph
+- 🌡 Comfort zone visualization (21–24°C)
+- ⚡ Energy consumption
+- 🌍 Carbon emissions tracking
+- 🎯 Comfort gauge
+- 🍩 Energy optimization donut chart
+- 📚 Decision history
+- 💬 AI chatbot
+
+---
+
+## 🎭 Multi-Scenario Simulation
+
+Compare AI performance across different weather conditions.
+
+| Scenario | Outdoor Temp | Baseline | AI Usage | Energy Saved |
+|-----------|-------------|-----------|----------|--------------|
+| 🌤 Normal Day | 22°C | 8.0 kWh | 2.57 kWh | **67.8%** |
+| ☀️ Heatwave | 42°C | 18.0 kWh | 4.2 kWh | **76.7%** |
+| ❄️ Winter Cold | -5°C | 15.0 kWh | 3.8 kWh | **74.7%** |
+
+### Average Savings
+
+**73.1% energy reduction** across all scenarios.
+
+---
+
+## 🌍 Carbon Awareness
+
+The system estimates avoided emissions using:
+
+- **CEA India Grid Emission Factor**
+- **0.233 kg CO₂/kWh**
+
+Carbon savings are displayed live on the dashboard.
+
+---
+
+## 💬 AI Building Assistant
+
+Interact with the building in natural language.
+
+Example questions:
+
+- How much energy did we save?
+- Why did the AI lower the heating setpoint?
+- Is the building comfortable?
+- Show today's AI decisions.
+- How much carbon was avoided?
+
+---
+
+# 🏗 System Architecture
+
+```text
+                    Closed-Loop AI Control
+
+        +-----------------------------------------------+
+
+        EnergyPlus 23.2
+               │
+               │ Live Sensor Data
+               ▼
+        MCP Tool Bridge
+        ├── get_sensor_data()
+        ├── set_hvac_setpoints()
+        └── log_decision()
+               │
+               ▼
+      Llama 3.3-70B (Groq API)
+               │
+      AI Decision + Tool Calls
+               │
+               ▼
+        EnergyPlus Actuators
+               │
+               ▼
+      SQLite Decision Database
+               │
+               ▼
+      Streamlit Dashboard
+```
+
+---
+
+# 🛠 Technology Stack
+
+| Layer | Technology |
+|--------|------------|
+| Building Simulation | EnergyPlus 23.2 |
+| AI Model | Llama 3.3-70B |
+| LLM Provider | Groq API |
+| AI Pattern | MCP Tool Calling |
+| Comfort Standard | ASHRAE 55 |
+| Energy Standard | ASHRAE 90.1 |
+| Carbon Tracking | CEA India Grid |
+| Database | SQLite |
+| Dashboard | Streamlit |
+| Charts | Plotly |
+| Language | Python 3.10+ |
+
+---
+
+# 📂 Project Structure
+
+```text
 honeywell-smart-building-ai/
 │
-├── app.py                      # Main Streamlit dashboard
-├── energyplus_real_bridge.py   # EnergyPlus ↔ LLM closed-loop
-├── submission_runner.py        # EnergyPlus simulation runner
-├── scenario_runner.py          # Multi-scenario simulator (Normal/Heatwave/Winter)
-├── config.py                   # API keys + model config
+├── app.py
+├── energyplus_real_bridge.py
+├── submission_runner.py
+├── scenario_runner.py
+├── config.py
 │
-├── building_model.idf          # EnergyPlus building definition
-├── weather.epw                 # Chicago climate weather file
-├── building_data.db            # SQLite database (auto-generated)
+├── building_model.idf
+├── weather.epw
+├── building_data.db
 │
 ├── requirements.txt
 └── README.md
-⚙️ Setup & Run
-Prerequisites
-Python 3.10+
-EnergyPlus 23.2 installed at C:\EnergyPlusV23-2-0
-Groq API Key (free tier available)
-Installation
-bash
+```
+
+---
+
+# ⚙️ Installation
+
+## Prerequisites
+
+- Python 3.10+
+- EnergyPlus 23.2
+- Groq API Key
+
+---
+
+## Clone Repository
+
+```bash
 git clone https://github.com/YOUR_USERNAME/honeywell-smart-building-ai.git
+
 cd honeywell-smart-building-ai
+```
+
+---
+
+## Install Dependencies
+
+```bash
 pip install -r requirements.txt
-Configuration
+```
 
-Create a config.py:
+---
 
-python
-GROQ_API_KEY = "your_groq_api_key_here"
-GROQ_MODEL   = "llama-3.3-70b-versatile"
-Run
-bash
-# Start dashboard
+## Configure API
+
+Create a file named `config.py`
+
+```python
+GROQ_API_KEY = "your_api_key_here"
+
+GROQ_MODEL = "llama-3.3-70b-versatile"
+```
+
+---
+
+# ▶️ Run
+
+Start the dashboard.
+
+```bash
 streamlit run app.py
+```
 
-In the sidebar:
+Inside the dashboard:
 
-Click ▶ Run EnergyPlus Simulation — runs real physics + LLM control
-Click 🎭 Run All Scenarios — runs Normal, Heatwave, Winter comparison
-📈 Results
-Metric	Value
-Energy saved (normal)	67.8% vs baseline
-Average comfort score	81.7% (ASHRAE 55)
-Carbon avoided	1.27 kg CO₂ per run
-AI decisions per run	30 autonomous decisions
-Simulation engine	Real EnergyPlus 23.2
-🎯 What Makes This Different
-Feature	Our System	Typical BMS
-Physics engine	Real EnergyPlus	Simplified mock
-AI control	Open-source LLM (Llama 3.3-70B)	Rule-based or GPT
-Tool calling	True MCP pattern	Direct prompting
-Transparency	Full decision log + reasoning	Black box
-Carbon tracking	CEA grid factor	Not tracked
-Multi-scenario	Heatwave / Winter / Normal	Single scenario
-🏆 Hackathon
+- ▶ Run EnergyPlus Simulation
+- 🎭 Run All Scenarios
 
-Honeywell Campus Connect 2026
-Problem Statement: Eco-Loop Building Agents
-Category: Software | Theme: Smart Cities & Urban Development
+---
 
-👨‍💻 Author
+# 📊 Results
 
-Soumyodip Bhattacharya
-B.Tech CSE — VIT Bhopal University
-BS Data Science — IIT Madras
-Student ID: 20525115
+| Metric | Result |
+|---------|--------|
+| Normal Energy Saving | **67.8%** |
+| Average Scenario Saving | **73.1%** |
+| Comfort Score | **81.7%** |
+| Carbon Avoided | **1.27 kg CO₂** |
+| AI Decisions | **30 per simulation** |
+| Simulation Engine | EnergyPlus 23.2 |
 
-📄 License
+---
 
-MIT License — see LICENSE for details.
+# 🎯 Why This Project?
+
+Traditional Building Management Systems typically rely on static schedules and predefined rules.
+
+Our system introduces:
+
+- ✅ Real building physics
+- ✅ Autonomous AI reasoning
+- ✅ Explainable decision making
+- ✅ Tool-calling architecture
+- ✅ Carbon-aware optimization
+- ✅ Scenario-based evaluation
+
+Every HVAC adjustment is made intelligently and logged with transparent reasoning.
+
+---
+
+# 📈 Comparison
+
+| Feature | Eco-Loop Building Agents | Traditional BMS |
+|----------|-------------------------|-----------------|
+| Real Physics Simulation | ✅ EnergyPlus | ❌ Simplified Models |
+| AI Decision Making | ✅ Llama 3.3-70B | ❌ Rule-Based |
+| MCP Tool Calling | ✅ Yes | ❌ No |
+| Explainable Decisions | ✅ Full Reasoning Logs | ❌ Limited |
+| Carbon Tracking | ✅ Yes | ❌ No |
+| Multi-Scenario Testing | ✅ Normal / Heatwave / Winter | ❌ Single Scenario |
+| Live Dashboard | ✅ Streamlit | ⚠ Limited |
+
+---
+
+# 🏆 Hackathon
+
+**Honeywell Campus Connect 2026**
+
+**Problem Statement:** Eco-Loop Building Agents
+
+**Theme:** Smart Cities & Urban Development
+
+**Category:** Software
+
+---
+
+# 👨‍💻 Author
+
+**Soumyodip Bhattacharya**
+
+- B.Tech CSE — VIT Bhopal University
+- BS Data Science — IIT Madras
+- Student ID: **20525115**
+
+---
+
+# 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## ⭐ If you found this project interesting, consider giving it a star!
