@@ -1,330 +1,146 @@
-# 🏢 Honeywell Smart Building AI
+live link https://soumyo321-honeywell-bms-app1-snuezx.streamlit.app/
 
-> AI-Powered Autonomous Building Management System using **EnergyPlus**, **Model Context Protocol (MCP)**, and **Open-Source LLMs** for intelligent HVAC optimization.
+→ Open Live Dashboard
 
-![Python](https://img.shields.io/badge/Python-3.11-blue)
-![EnergyPlus](https://img.shields.io/badge/EnergyPlus-23.2-green)
-![Groq](https://img.shields.io/badge/Groq-LLM-orange)
-![MCP](https://img.shields.io/badge/MCP-Tool%20Calling-purple)
-![License](https://img.shields.io/badge/License-MIT-red)
+📋 Problem Statement
 
----
+ID: 1 | Title: Eco-Loop Building Agents
+Theme: Smart Cities & Urban Development | Category: Software
+Student: Soumyodip Bhattacharya | ID: 20525115
 
-## 📌 Overview
+Buildings consume 40% of global energy — mostly through HVAC systems running on fixed, dumb schedules with no real-time adaptation. Traditional Building Management Systems (BMS) either waste energy or sacrifice occupant comfort with no intelligent tradeoff.
 
-Buildings account for a significant portion of global energy consumption, with HVAC systems being the largest contributor. Traditional Building Management Systems rely on static rules that cannot adapt intelligently to changing occupancy or environmental conditions.
+🚀 What We Built
 
-This project introduces an **AI-powered autonomous Building Management System** that integrates:
+A fully autonomous BMS that:
 
-- 🏢 EnergyPlus Building Simulation
-- 🤖 Open-source LLM (via Groq)
-- 🔌 Model Context Protocol (MCP)
-- 📊 Interactive Dashboard
-- 💬 AI Building Assistant
+Runs real EnergyPlus 23.2 building physics simulation
+Reads live sensor data via Python API callbacks at every timestep
+Sends data to Llama 3.3-70B (open-source LLM) via Groq API
+LLM reasons about comfort vs energy vs carbon goals and calls MCP tools
+New HVAC setpoints are written directly into EnergyPlus actuators in real-time
+Every decision is logged to SQLite with full AI reasoning
+Streamlit dashboard shows live metrics, charts, AI chat, and 3-scenario comparison
+🏗 Architecture
+┌─────────────────────────────────────────────────────────────┐
+│                  Closed-Loop AI Control                      │
+│                                                              │
+│  EnergyPlus  ──sensor data──▶  MCP Bridge  ──tool call──▶  LLM  │
+│      ▲                             │                         │
+│      └────── actuator write ───────┘                         │
+│                                                              │
+│              SQLite ◀── log ──── Dashboard                   │
+└─────────────────────────────────────────────────────────────┘
+Layer	Component	Role
+Physics	EnergyPlus 23.2	Real building simulation with building_model.idf + Chicago weather
+Bridge	MCP Tool Bridge	get_sensor_data(), set_hvac_setpoints(), log_decision()
+AI	Llama 3.3-70B via Groq	Autonomous HVAC decisions every 4 simulation hours
+Storage	SQLite	Full audit trail — sensor readings, decisions, reasoning
+UI	Streamlit + Plotly	Live dashboard, charts, comfort gauge, AI chatbot
+✨ Key Features
+🔄 Closed-Loop Autonomous Control
+LLM receives real-time temperature from EnergyPlus
+Decides heating/cooling setpoints based on comfort + energy rules
+Writes setpoints directly to HVAC actuators — zero human intervention
+📊 Live Dashboard
+Temperature chart — zone temp vs comfort zone (21–24°C)
+Energy comparison — AI usage vs 8 kWh baseline
+Comfort gauge — ASHRAE 55 standard score
+Energy donut — AI optimized vs baseline overhead
+Carbon tracking — CO₂ avoided (CEA grid factor: 0.233 kg/kWh)
+🎭 Multi-Scenario Comparison
+Scenario	Outdoor Temp	Baseline	With AI	Saving
+🌤 Normal Day	22°C	8.0 kWh	2.57 kWh	67.8%
+☀️ Heatwave	42°C	18.0 kWh	4.2 kWh	76.7%
+❄️ Winter Cold	-5°C	15.0 kWh	3.8 kWh	74.7%
 
-The AI continuously monitors live building conditions, reasons about occupant comfort and energy efficiency, and autonomously adjusts HVAC setpoints to minimize energy usage while maintaining thermal comfort.
+Average AI savings: 73.1% across all scenarios
 
----
+💬 AI Chat Assistant
 
-# 🚀 Features
+Ask the building AI anything about the simulation in real-time:
 
-### ✅ Autonomous HVAC Optimization
-
-- AI automatically adjusts Heating & Cooling Setpoints
-- Closed-loop control
-- Continuous optimization
-
----
-
-### 📈 Live Dashboard
-
-Displays
-
-- Current Temperature
-- AI Decisions
-- Energy Saved
-- Comfort Score
-- Temperature Trends
-- Energy Comparison
-
----
-
-### 💬 AI Building Assistant
-
-The integrated chatbot can answer questions such as:
-
-- What is happening in the building?
-- Why did the AI change HVAC settings?
-- How much energy has been saved?
-- What is the current comfort level?
-- Explain the latest AI decisions.
-
----
-
-### 📊 EnergyPlus Integration
-
-Uses EnergyPlus to simulate
-
-- Building Physics
-- Indoor Temperature
-- HVAC Behaviour
-- Energy Consumption
-- Occupancy Effects
-
----
-
-### 🔌 MCP Tool Calling
-
-The LLM interacts with the building through Model Context Protocol tools.
-
-Example workflow:
-
-```
-EnergyPlus
-      ↓
-Sensor Data
-      ↓
-MCP Tools
-      ↓
-LLM Reasoning
-      ↓
-HVAC Decision
-      ↓
-Updated Setpoints
-```
-
----
-
-# 🏗 System Architecture
-
-```
-                +--------------------+
-                |  EnergyPlus Model  |
-                +---------+----------+
-                          |
-                    Live Sensor Data
-                          |
-                 MCP Tool Interface
-                          |
-                +---------v----------+
-                |    Groq LLM AI     |
-                | Decision Engine    |
-                +---------+----------+
-                          |
-              HVAC Setpoint Adjustment
-                          |
-                +---------v----------+
-                |   Building Model   |
-                +---------+----------+
-                          |
-                     Dashboard
-                          |
-                    AI Chat Assistant
-```
-
----
-
-# 🛠 Tech Stack
-
-### Backend
-
-- Python
-- SQLite
-- Pandas
-
-### AI
-
-- Groq API
-- Llama 3.1 / Llama 3.3
-- MCP (Model Context Protocol)
-
-### Simulation
-
-- EnergyPlus
-
-### Frontend
-
-- Streamlit
-- Plotly
-
----
-
-# 📂 Project Structure
-
-```
-Honeywell-Smart-Building-AI/
-
+"How much energy did we save?"
+"Why did the AI lower the heating setpoint?"
+"Is the building in the comfort zone?"
+🧰 Tech Stack
+├── Building Physics    → EnergyPlus 23.2 (pyenergyplus API)
+├── LLM                 → Llama 3.3-70B via Groq API
+├── AI Pattern          → MCP Tool Calling
+├── Energy Standard     → ASHRAE 55 Comfort + ASHRAE 90.1
+├── Carbon Factor       → CEA India Grid (0.233 kg CO₂/kWh)
+├── Database            → SQLite (real-time audit trail)
+├── Dashboard           → Streamlit + Plotly
+└── Language            → Python 3.10+
+📁 Project Structure
+honeywell-smart-building-ai/
 │
-├── app.py
-├── config.py
-├── mcp_server.py
-├── building_ai.py
-├── simulation.py
-├── energyplus/
+├── app.py                      # Main Streamlit dashboard
+├── energyplus_real_bridge.py   # EnergyPlus ↔ LLM closed-loop
+├── submission_runner.py        # EnergyPlus simulation runner
+├── scenario_runner.py          # Multi-scenario simulator (Normal/Heatwave/Winter)
+├── config.py                   # API keys + model config
 │
-├── database/
-│
-├── dashboard/
-│
-├── assets/
+├── building_model.idf          # EnergyPlus building definition
+├── weather.epw                 # Chicago climate weather file
+├── building_data.db            # SQLite database (auto-generated)
 │
 ├── requirements.txt
-│
 └── README.md
-```
-
----
-
-# ⚙ Installation
-
-Clone the repository
-
-```bash
-git clone https://github.com/yourusername/Honeywell-Smart-Building-AI.git
-
-cd Honeywell-Smart-Building-AI
-```
-
-Install dependencies
-
-```bash
+⚙️ Setup & Run
+Prerequisites
+Python 3.10+
+EnergyPlus 23.2 installed at C:\EnergyPlusV23-2-0
+Groq API Key (free tier available)
+Installation
+bash
+git clone https://github.com/YOUR_USERNAME/honeywell-smart-building-ai.git
+cd honeywell-smart-building-ai
 pip install -r requirements.txt
-```
+Configuration
 
----
+Create a config.py:
 
-## Configure API Key
-
-Create a `.env`
-
-```env
-GROQ_API_KEY=your_api_key
-```
-
-or edit
-
-```python
-config.py
-```
-
-```python
-GROQ_MODEL="llama-3.1-8b-instant"
-```
-
----
-
-# ▶ Running the Project
-
-```bash
+python
+GROQ_API_KEY = "your_groq_api_key_here"
+GROQ_MODEL   = "llama-3.3-70b-versatile"
+Run
+bash
+# Start dashboard
 streamlit run app.py
-```
 
-The dashboard will launch locally.
+In the sidebar:
 
----
+Click ▶ Run EnergyPlus Simulation — runs real physics + LLM control
+Click 🎭 Run All Scenarios — runs Normal, Heatwave, Winter comparison
+📈 Results
+Metric	Value
+Energy saved (normal)	67.8% vs baseline
+Average comfort score	81.7% (ASHRAE 55)
+Carbon avoided	1.27 kg CO₂ per run
+AI decisions per run	30 autonomous decisions
+Simulation engine	Real EnergyPlus 23.2
+🎯 What Makes This Different
+Feature	Our System	Typical BMS
+Physics engine	Real EnergyPlus	Simplified mock
+AI control	Open-source LLM (Llama 3.3-70B)	Rule-based or GPT
+Tool calling	True MCP pattern	Direct prompting
+Transparency	Full decision log + reasoning	Black box
+Carbon tracking	CEA grid factor	Not tracked
+Multi-scenario	Heatwave / Winter / Normal	Single scenario
+🏆 Hackathon
 
-# 🔄 Workflow
+Honeywell Campus Connect 2026
+Problem Statement: Eco-Loop Building Agents
+Category: Software | Theme: Smart Cities & Urban Development
 
-1. Start EnergyPlus Simulation
-2. Read Building Sensors
-3. MCP exposes sensor tools
-4. LLM analyzes building state
-5. AI adjusts HVAC setpoints
-6. Dashboard updates live
-7. User can interact with AI Assistant
+👨‍💻 Author
 
----
+Soumyodip Bhattacharya
+B.Tech CSE — VIT Bhopal University
+BS Data Science — IIT Madras
+Student ID: 20525115
 
-# 📊 Dashboard
+📄 License
 
-The dashboard includes
-
-- Live Temperature
-- AI Decision Count
-- Energy Saved
-- Comfort Score
-- Temperature Timeline
-- Energy Comparison (Baseline vs AI)
-- AI Decision Logs
-- Interactive AI Chat Assistant
-
----
-
-# 💬 Example Questions
-
-```
-What are we doing here?
-
-```
-
-```
-Why did the AI adjust the HVAC settings?
-
-```
-
-```
-How much energy has been saved?
-
-```
-
-```
-Explain the latest AI decision.
-
-```
-
-```
-What is the current comfort score?
-
-```
-
-```
-Compare AI energy usage with baseline.
-
-```
-
----
-
-# 📈 Results
-
-The autonomous controller successfully demonstrates
-
-- ✅ Continuous HVAC optimization
-- ✅ Reduced energy consumption
-- ✅ Maintained occupant comfort
-- ✅ Explainable AI decisions
-- ✅ Real-time monitoring
-- ✅ Interactive building assistant
-
----
-
-# 🎯 Future Improvements
-
-- Weather Forecast Integration
-- Reinforcement Learning Controller
-- Multi-building Support
-- Occupancy Prediction
-- Carbon Emission Optimization
-- BACnet / IoT Sensor Integration
-- Digital Twin Visualization
-
----
-
-# 👥 Team
-
-Developed for the
-
-**AI-Powered Autonomous Smart Building Optimization Challenge**
-
-Built with ❤️ using
-
-- EnergyPlus
-- MCP
-- Groq LLM
-- Streamlit
-- Python
-
----
-
-# 📜 License
-
-This project is released under the MIT License.
+MIT License — see LICENSE for details.
