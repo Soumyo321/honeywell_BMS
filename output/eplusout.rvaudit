@@ -1,0 +1,16 @@
+ ReadVarsESO
+ processing:./building_model.rvi
+ input file:output\eplusout.eso
+ output file:output\eplusout.csv
+ getting all vars from:output\eplusout.eso
+  number variables requested for output=          67
+ ReadVars Run Time=00hr 00min  0.05sec
+ ReadVarsESO program completed successfully.
+ ReadVarsESO
+ processing:./building_model.mvi
+ input file:output\eplusout.mtr
+ output file:output\eplusmtr.csv
+ getting all vars from:output\eplusout.mtr
+  number variables requested for output=          28
+ ReadVars Run Time=00hr 00min  0.03sec
+ ReadVarsESO program completed successfully.
